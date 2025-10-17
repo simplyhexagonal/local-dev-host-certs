@@ -78,17 +78,37 @@ We renew the certificates a few days before expiry to avoid disruptions.
 The easiest way to automatically check if you need to renew is by comparing the current `.scheduled-renewal` file in your certs directory against the latest one in the `local-dev-host-certs` repo, for example:
 
 ```bash
+#!/usr/bin/env bash
+
 # Inside certs directory
 
-# Download to latest certs to renewal-certs directory
+# Download latest certs to renewal-certs directory
 git clone https://github.com/simplyhexagonal/local-dev-host-certs.git renewal-certs
 
 # Exit on error
-# TODO
+if [ $? -ne 0 ]; then
+    echo "Failed to clone repository"
+    exit 1
+fi
 
 # Compare `.scheduled-renewal` against `renewal-certs/.scheduled-renewal`
-# If different, move files up (overwrite existing) and delete empty `renewal-certs` directory
-# TODO
+if [ ! -f ".scheduled-renewal" ] || [ ! -f "renewal-certs/.scheduled-renewal" ]; then
+    echo "Missing .scheduled-renewal files"
+    rm -rf renewal-certs
+    exit 1
+fi
+
+if ! cmp -s ".scheduled-renewal" "renewal-certs/.scheduled-renewal"; then
+    echo "Certificates need renewal. Updating..."
+
+    # Move files up (overwrite existing) and delete empty renewal-certs directory
+    cp -f renewal-certs/* .
+    rm -rf renewal-certs
+    echo "Certificates updated successfully"
+else
+    echo "Certificates are up to date"
+    rm -rf renewal-certs
+fi
 ```
 
-You can schedule this automatic process to happen 24 hours after the scheduled renewal date.
+You can schedule this automatic process to happen 24 hours after the scheduled renewal date to avoid having to check constantly.
