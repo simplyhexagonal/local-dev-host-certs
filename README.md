@@ -4,6 +4,15 @@ Simple, ready-to-use TLS certificates for local development with the `local.devh
 
 This is a tool provided for free by the [Simply Hexagonal](https://simplyhexagonal.org) open source collective.
 
+## Like this tool? ❤
+
+Please consider:
+
+- Supporting Simply Hexagonal through [Open Collective](https://opencollective.com/simplyhexagonal) 💖
+- [Buying the maintainer a coffee](https://www.buymeacoffee.com/jeanlescure) ☕
+- Supporting the maintainer on [Patreon](https://www.patreon.com/jeanlescure) 🏆
+- Starring this repo on [Github](https://github.com/jeanlescure/short-unique-id) 🌟
+
 ## Quick start
 
 1. Add the certificates to your project (creates a `certs` folder):
@@ -57,3 +66,29 @@ services:
   - `local-api.devhost.name`
   - `local-db.devhost.name`
   - `local-admin.devhost.name`
+
+## Renewal dates
+
+The certificates are generated using [letsencrypt](https://letsencrypt.org/) and expire every 90 days.
+
+We provide a file named `.scheduled-renewal` that contains the date of next renewal with the format `yyyy-mm-dd`.
+
+We renew the certificates a few days before expiry to avoid disruptions.
+
+The easiest way to automatically check if you need to renew is by comparing the current `.scheduled-renewal` file in your certs directory against the latest one in the `local-dev-host-certs` repo, for example:
+
+```bash
+# Inside certs directory
+
+# Download to latest certs to renewal-certs directory
+git clone https://github.com/simplyhexagonal/local-dev-host-certs.git renewal-certs
+
+# Exit on error
+# TODO
+
+# Compare `.scheduled-renewal` against `renewal-certs/.scheduled-renewal`
+# If different, move files up (overwrite existing) and delete empty `renewal-certs` directory
+# TODO
+```
+
+You can schedule this automatic process to happen 24 hours after the scheduled renewal date.
