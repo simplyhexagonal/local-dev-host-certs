@@ -11,7 +11,7 @@ Please consider:
 - Supporting Simply Hexagonal through [Open Collective](https://opencollective.com/simplyhexagonal) 💖
 - [Buying the maintainer a coffee](https://www.buymeacoffee.com/jeanlescure) ☕
 - Supporting the maintainer on [Patreon](https://www.patreon.com/jeanlescure) 🏆
-- Starring this repo on [Github](https://github.com/jeanlescure/short-unique-id) 🌟
+- Starring this repo on [Github](https://github.com/simplyhexagonal/local-dev-host-certs) 🌟
 
 ## Quick start
 
